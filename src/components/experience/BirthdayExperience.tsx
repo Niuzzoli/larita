@@ -4,7 +4,10 @@ import { AnimatePresence, MotionConfig, motion } from "framer-motion";
 import { useCallback, useEffect, useReducer, useState } from "react";
 import { ProgressIndicator } from "@/components/ui/ProgressIndicator";
 import { experienceReducer, initialState } from "@/state/experience";
+import { CoupleQuizScene } from "./CoupleQuizScene";
+import { FinalLetterScene } from "./FinalLetterScene";
 import { IntroScene } from "./IntroScene";
+import { LoveNotesScene } from "./LoveNotesScene";
 import { MemoriesScene } from "./MemoriesScene";
 
 export function BirthdayExperience() {
@@ -23,6 +26,14 @@ export function BirthdayExperience() {
     setNavigated(true);
     dispatch({ type: "back", from: scene });
   }, [scene]);
+  const answerQuiz = useCallback(
+    (questionId: string, optionId: string) => dispatch({ type: "answerQuiz", questionId, optionId }),
+    [],
+  );
+  const openNote = useCallback((noteId: string) => dispatch({ type: "openNote", noteId }), []);
+  const finalIntroDone = useCallback(() => dispatch({ type: "finalIntroDone" }), []);
+  const revealGift = useCallback(() => dispatch({ type: "revealGift" }), []);
+  const restart = useCallback(() => dispatch({ type: "restart" }), []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -34,8 +45,21 @@ export function BirthdayExperience() {
         return <IntroScene initiallyOpened={state.maxReached !== "intro"} onNext={next} />;
       case "memories":
         return <MemoriesScene onNext={next} onBack={back} />;
-      default:
-        return null;
+      case "quiz":
+        return <CoupleQuizScene answers={state.quizAnswers} onAnswer={answerQuiz} onNext={next} onBack={back} />;
+      case "notes":
+        return <LoveNotesScene opened={state.openedNotes} onOpen={openNote} onNext={next} onBack={back} />;
+      case "final":
+        return (
+          <FinalLetterScene
+            introDone={state.finalIntroDone}
+            giftRevealed={state.giftRevealed}
+            onIntroDone={finalIntroDone}
+            onRevealGift={revealGift}
+            onRestart={restart}
+            onBack={back}
+          />
+        );
     }
   };
 
