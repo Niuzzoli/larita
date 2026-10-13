@@ -1,0 +1,532 @@
+# PROYECTO: "Nuestro pequeño universo" — Web interactiva de cumpleaños para mi novia
+
+Actuá como un desarrollador frontend senior, diseñador UI/UX y especialista en experiencias web interactivas y motion design. Quiero que construyas una web de cumpleaños completa, visualmente espectacular, romántica y divertida, utilizando Next.js.
+
+No quiero una plantilla de cumpleaños genérica. Quiero una experiencia interactiva, emocional y memorable, hecha para mi novia, que pueda abrir desde su celular mediante un enlace.
+
+La web debe sentirse como una mezcla de un álbum de recuerdos artesanal, un pequeño videojuego romántico y una experiencia cinematográfica.
+
+IMPORTANTE: no te limites a darme instrucciones, una propuesta visual o un prototipo. Implementá el proyecto completo en el código, ejecutá las verificaciones necesarias y dejalo funcionando.
+
+Antes de comenzar la implementación, leé íntegramente el archivo `contenido-personal.txt` ubicado en la raíz del proyecto y revisá todas las fotografías disponibles.
+
+Usá ese archivo como fuente de verdad para todo el contenido personal de la web: preguntas y respuestas del quiz, descripciones de los recuerdos, cartas románticas y dedicatoria final.
+
+Requisitos:
+- Integrá los textos reales desde la primera versión funcional.
+- No inventes experiencias, fechas, nombres, anécdotas ni detalles de nuestra relación.
+- Respetá la redacción de la carta final; corregí únicamente errores ortográficos evidentes sin cambiar su voz ni su significado.
+- Conservá el orden cronológico indicado para las fotografías.
+- Si algún campo está vacío, utilizá una alternativa neutra y romántica o dejá esa parte configurable, sin inventar datos personales.
+- Centralizá el contenido en `src/config/birthday.ts` para que pueda editarlo fácilmente.
+- No dupliques innecesariamente los textos en varios componentes.
+- Antes de finalizar, verificá que todas las preguntas, respuestas, cartas e imágenes estén correctamente integradas.
+
+## 1. OBJETIVO Y CONCEPTO
+
+Nombre conceptual: "Nuestro pequeño universo".
+
+La experiencia debe recorrer cinco etapas:
+
+1. Una caja de regalo interactiva que introduce la sorpresa.
+2. Una historia de nuestra relación contada mediante fotografías.
+3. Un minijuego de preguntas divertidas sobre nuestra pareja.
+4. Una colección de mensajes personales y razones por las que amo a mi novia.
+5. Una carta final de cumpleaños con una animación emocional y una sorpresa desbloqueable.
+
+Toda la experiencia debe estar en español, con un tono cercano, natural, romántico y divertido. Usá expresiones rioplatenses cuando encajen, sin exagerar.
+
+La destinataria es una persona romántica y divertida. El resultado debe transmitir cariño y humor, evitando tanto lo infantil como el exceso de cursilería.
+
+## 2. TECNOLOGÍAS
+
+Utilizá:
+- Next.js con App Router.
+- TypeScript.
+- Tailwind CSS.
+- Framer Motion para animaciones.
+- Lucide React para iconos, si resulta útil.
+- CSS personalizado cuando permita conseguir un resultado visual mejor.
+- Componentes reutilizables y una estructura clara.
+
+Si el proyecto ya existe, primero inspeccioná sus archivos, dependencias y configuración. Adaptate al proyecto en lugar de reemplazarlo innecesariamente.
+
+Si todavía no existe, inicializá un proyecto con una versión estable y compatible de Next.js y las dependencias necesarias.
+
+No agregues bibliotecas pesadas sin necesidad. No utilices un backend, base de datos, autenticación ni APIs externas: esta primera versión debe ser una experiencia frontend estática que pueda desplegarse en Vercel.
+
+## 3. DIRECCIÓN ARTÍSTICA
+
+Quiero un diseño premium, cuidado y coherente en todas las pantallas.
+
+Paleta sugerida:
+- Crema cálido: #FFF5F2.
+- Rosa pastel: #F8DCE6.
+- Rosa intenso suave: #EBA8C0.
+- Lavanda: #C9B8E8.
+- Ciruela oscuro: #57394D.
+- Blanco para tarjetas y superficies.
+
+La paleta es una referencia; podés ajustar los tonos para conseguir contraste, legibilidad y armonía.
+
+Estilo visual:
+- Scrapbook romántico contemporáneo.
+- Fotografías estilo Polaroid.
+- Pequeños corazones, estrellas, garabatos y anotaciones.
+- Bordes suaves y sombras delicadas.
+- Tipografía serif elegante en los títulos.
+- Sans serif legible en textos y controles.
+- Detalles manuscritos en notas cortas.
+- Espacios generosos y composición editorial.
+- Animaciones fluidas, sutiles y bien sincronizadas.
+
+Quiero que tenga personalidad visual propia. No uses el diseño típico de una plantilla SaaS, una landing comercial ni una sucesión de tarjetas idénticas.
+
+Evitá:
+- Exceso de degradados.
+- Glow en todos los elementos.
+- Glassmorphism indiscriminado.
+- Corazones flotando en cantidades exageradas.
+- Animaciones constantes que distraigan.
+- Textos genéricos repetidos.
+- Elementos que parezcan botones pero no funcionen.
+
+El resultado debe parecer diseñado a medida, con especial atención a la composición, la jerarquía tipográfica y los detalles.
+
+## 4. ESTRUCTURA GENERAL Y NAVEGACIÓN
+
+Construí una experiencia de una sola página con cinco escenas o etapas.
+
+No muestres todas las secciones simultáneamente al entrar. La persona debe ir descubriendo la experiencia.
+
+Implementá:
+- Transiciones suaves entre escenas.
+- Indicador discreto del progreso.
+- Botones para avanzar.
+- Botones para volver cuando tenga sentido.
+- Una forma clara de continuar desde cada pantalla.
+- Una opción para reiniciar la experiencia al final.
+- Estado coherente de la navegación.
+- Diseño mobile-first.
+
+No recargues la página en cada transición.
+
+La experiencia debe funcionar correctamente en celulares, tabletas y computadoras.
+
+## 5. ESCENA 1: LA CAJA DE REGALO
+
+Diseñá una pantalla inicial que ocupe prácticamente todo el viewport.
+
+Fondo crema o rosa pastel, iluminación suave, algunos detalles decorativos y una caja de regalo en el centro.
+
+La caja debe ser un elemento visual protagonista, construida con CSS, SVG o componentes propios. No dependas de una imagen externa para su animación.
+
+Texto inicial sugerido:
+
+"Hoy es un día muy especial..."
+
+"Y preparé algo para vos. ♡"
+
+Debajo, mostrale una instrucción pequeña que invite a tocar la caja.
+
+Al interactuar:
+- La cinta debe soltarse o desaparecer.
+- La tapa debe abrirse mediante una animación convincente.
+- Deben aparecer algunos corazones, estrellas o partículas.
+- La caja puede emitir un pequeño efecto de rebote.
+- Debe aparecer el botón "Descubrir mi regalo".
+
+Al tocar ese botón, iniciá una transición hacia la segunda escena.
+
+No reproduzcas música automáticamente. Si se incluye música, debe activarse mediante una acción explícita del usuario.
+
+La pantalla inicial debe ser visualmente memorable, no simplemente una caja dibujada con un emoji.
+
+## 6. ESCENA 2: NUESTRA HISTORIA
+
+Esta sección debe mostrar fotografías reales de la pareja.
+
+Construí una narrativa visual mediante un álbum interactivo con fotografías de distintos tamaños, algunas ligeramente rotadas y otras perfectamente alineadas.
+
+Quiero:
+- Efecto Polaroid.
+- Aparición progresiva de las fotografías.
+- Animaciones suaves al entrar en pantalla.
+- Bordes, sombras y pequeños detalles de papel.
+- Texto corto asociado a cada foto.
+- Posibilidad de tocar una foto para verla ampliada en un modal.
+- Navegación cómoda desde el celular.
+
+La composición debe alternar fotografías y textos, en lugar de mostrar únicamente una cuadrícula convencional.
+
+Podés utilizar una introducción como:
+
+"Si hay algo que me encanta, es tener recuerdos con vos."
+
+Después, mostrale varias fotografías con frases personales editables.
+
+IMPORTANTE: no inventes fechas, lugares, acontecimientos ni recuerdos de la pareja. Utilizá textos de ejemplo claramente identificados como editables.
+
+Creá una estructura de datos centralizada para las fotos. Cada elemento debe permitir definir:
+- Ruta de la imagen.
+- Texto breve.
+- Fecha opcional.
+- Descripción opcional.
+- Texto alternativo.
+
+Prepará espacio para unas 8 a 12 fotografías.
+
+Si faltan imágenes, la interfaz debe seguir funcionando. Podés mostrar marcadores visuales elegantes que indiquen dónde colocar las fotos, pero no quiero fotografías aleatorias de parejas de internet que puedan confundirse con fotos reales nuestras.
+
+Al terminar, mostrá un botón para continuar hacia el minijuego.
+
+## 7. ESCENA 3: MINIJUEGO DE PAREJA
+
+Creá un minijuego con entre cuatro y cinco preguntas sobre la relación.
+
+Debe ser divertido, cariñoso y visualmente atractivo.
+
+Ejemplos de preguntas editables:
+- ¿Quién tarda más en decidir qué comer?
+- ¿Quién da más besos?
+- ¿Quién es más probable que se ría en un momento serio?
+- ¿Qué plan elegiríamos para pasar un día juntos?
+- ¿Quién es más probable que quiera quedarse cinco minutos más abrazado?
+
+No asumas las respuestas reales de la pareja. Permití configurar las opciones, cuál es la respuesta elegida para cada pregunta y qué reacción aparece.
+
+Cada pregunta debe tener dos o tres respuestas en botones grandes y fáciles de tocar.
+
+Al elegir una respuesta:
+- Mostrá una reacción personalizada.
+- Usá una animación breve.
+- Podés hacer aparecer corazones, estrellas o una expresión divertida.
+- Permití avanzar a la siguiente pregunta.
+
+Incluí una pequeña barra de progreso y un resultado final simpático.
+
+No conviertas el juego en un examen ni penalices las respuestas incorrectas.
+
+Al finalizar, mostrale un mensaje cálido y gracioso, seguido de un botón para continuar.
+
+Todos los textos, preguntas, opciones y reacciones deben estar en un archivo de configuración editable.
+
+## 8. ESCENA 4: PEQUEÑAS COSAS QUE AMO DE VOS
+
+Esta debe ser una de las secciones más personales de la web.
+
+Diseñá una pared de sobres, tarjetas, corazones o pequeñas notas repartidas en una composición visual artesanal.
+
+Mostrá entre seis y ocho elementos interactivos.
+
+Cada elemento puede tener un título, por ejemplo:
+- "Una cosa que amo de vos".
+- "Un recuerdo que me hace reír".
+- "Algo que quizás no sabés".
+- "Una pequeña cosa que me hace feliz".
+- "Una razón para elegirte siempre".
+- "Un secreto de mi corazón".
+
+Al tocar una tarjeta:
+- Debe abrirse o girarse.
+- Aparece el mensaje completo.
+- La animación tiene que sentirse agradable.
+- El estado de apertura debe mantenerse mientras la persona permanezca en esa sección.
+
+Incluí un indicador sutil de cuántos mensajes quedan por descubrir.
+
+Al abrir todas las tarjetas, desbloqueá un detalle especial y el botón para continuar.
+
+No inventes declaraciones personales demasiado específicas. Dejá el contenido preparado para que yo lo complete con mis propias palabras.
+
+## 9. ESCENA 5: CARTA FINAL Y GRAN SORPRESA
+
+Esta debe ser la parte emocionalmente más fuerte de la experiencia.
+
+Diseñá una transición hacia una escena nocturna con un cielo violeta oscuro, estrellas pequeñas y un corazón formado mediante puntos de luz o una composición CSS/SVG.
+
+La animación debe ser elegante, fluida y ligera.
+
+No conviertas esta sección en un espectáculo excesivo de partículas. Quiero que el foco termine estando en el mensaje.
+
+Secuencia:
+1. La pantalla cambia gradualmente de ambiente.
+2. Aparecen algunas estrellas.
+3. Se ilumina un corazón.
+4. Aparece una fotografía favorita.
+5. Se revela una carta de cumpleaños.
+6. Aparece una última sorpresa.
+
+Texto introductorio sugerido:
+
+"Y si llegaste hasta acá, es porque todavía me quedan cosas por decirte..."
+
+La carta debe tener un área editable donde pueda escribir un mensaje largo y personal.
+
+Utilizá un texto provisional corto que esté claramente marcado como ejemplo y que sea fácil de reemplazar.
+
+No generes una declaración de amor extensa que parezca conocer experiencias que nunca te conté.
+
+La carta debe permitir saltos de párrafo y conservar una tipografía legible en el celular.
+
+Después de la carta, mostrale:
+
+"Feliz cumpleaños, mi amor. ♡"
+
+Como último elemento, agregá un botón:
+
+"¿Abrimos tu último regalito?"
+
+Al pulsarlo, revelá una tarjeta especial con contenido configurable. Puede ser:
+- Una invitación a una cita.
+- Un plan sorpresa.
+- Un regalo que le voy a dar.
+- Un mensaje privado.
+- Una frase interna de la pareja.
+
+No asumas qué regalo le daré. Dejá un campo de configuración para personalizarlo.
+
+Cuando se revele el regalo, podés mostrar una breve animación de confeti y un botón para volver a ver la experiencia.
+
+## 10. FOTOGRAFÍAS Y ARCHIVOS MULTIMEDIA
+
+Quiero que el proceso de agregar fotografías sea sencillo.
+
+Organizá los archivos de la siguiente forma, adaptándola si hace falta:
+
+public/
+  images/
+    memories/
+    final/
+  audio/
+
+Las imágenes deben cargarse desde archivos locales incluidos en el proyecto, sin depender de URLs externas.
+
+Usá nombres descriptivos, por ejemplo:
+- recuerdo-01.jpg
+- recuerdo-02.jpg
+- recuerdo-03.jpg
+- foto-favorita.jpg
+
+No inventes archivos ni des por hecho que existen.
+
+Prepará una configuración centralizada, por ejemplo:
+
+src/config/birthday.ts
+
+En ella deben estar:
+- Nombre o apodo de mi novia.
+- Fecha especial de la pareja, si quiero mostrarla.
+- Textos de las escenas.
+- Lista de fotografías y sus descripciones.
+- Preguntas y respuestas del minijuego.
+- Mensajes de las tarjetas.
+- Texto de la carta.
+- Fotografía final.
+- Contenido del último regalo.
+- Configuración opcional de música.
+
+Usá valores provisionales fácilmente reconocibles. Evitá distribuir el contenido personal por numerosos componentes.
+
+Si no se configura una fotografía, mostrá un estado visual agradable que indique cómo agregarla. No rompas el diseño.
+
+Incluí instrucciones claras en un README explicando cómo reemplazar las imágenes y personalizar los textos.
+
+## 11. MÚSICA Y SONIDO
+
+Prepará la posibilidad de agregar una canción personal.
+
+La música debe:
+- Estar desactivada al entrar.
+- Activarse mediante un botón claramente visible.
+- Permitir pausar y reanudar.
+- Mostrar un indicador visual del estado.
+- No impedir que el usuario navegue si falta el archivo de audio.
+- Manejar correctamente los errores de reproducción.
+
+No descargues canciones de fuentes externas ni incluyas archivos con copyright que yo no haya proporcionado.
+
+No hace falta agregar sonidos a cada interacción. Si se incorporan, deben ser opcionales, discretos y no repetitivos.
+
+## 12. ANIMACIONES Y MICROINTERACCIONES
+
+Usá Framer Motion para:
+- Transiciones entre escenas.
+- Entrada y salida de elementos.
+- Apertura de la caja.
+- Aparición de fotografías.
+- Apertura de tarjetas.
+- Revelación de la carta.
+- Animaciones finales.
+
+Usá CSS para los efectos simples cuando resulte más eficiente.
+
+Todas las animaciones deben tener una razón visual. Evitá que cada elemento se mueva permanentemente.
+
+Requisitos:
+- Animaciones suaves y fluidas.
+- Respuesta inmediata al tocar botones.
+- Sin saltos de diseño.
+- Sin desplazamientos horizontales accidentales.
+- Sin animaciones pesadas que afecten el rendimiento.
+- Compatibilidad con prefers-reduced-motion.
+- Experiencia correcta con pantallas táctiles.
+
+No uses cursores personalizados obligatorios ni interacciones que dependan exclusivamente de hover.
+
+## 13. RESPONSIVE DESIGN
+
+La web se abrirá principalmente desde un celular.
+
+Diseñá primero para pantallas pequeñas y después adaptá el layout para escritorio.
+
+En móvil:
+- Botones cómodos para tocar.
+- Texto con tamaño legible.
+- Fotos sin recortes desafortunados.
+- Tarjetas que no se superpongan de forma accidental.
+- Navegación sencilla.
+- Modales que entren completamente en la pantalla.
+- Respeto por las áreas seguras del dispositivo.
+- Sin scroll horizontal.
+- Sin exigir hover.
+
+En escritorio:
+- Aprovechá el espacio para crear composiciones más amplias.
+- Mantené una anchura de lectura cómoda.
+- No estires las fotografías ni el texto de forma excesiva.
+
+## 14. ACCESIBILIDAD Y CALIDAD
+
+Implementá:
+- HTML semántico.
+- Contraste suficiente.
+- Textos alternativos para las imágenes.
+- Foco de teclado visible.
+- Navegación por teclado.
+- Botones con etiquetas accesibles.
+- Respeto por las preferencias de movimiento reducido.
+- Estados de carga y error cuando sean necesarios.
+
+No uses elementos no interactivos como si fueran botones.
+
+Evitá dependencias innecesarias y advertencias de React.
+
+Mantené una separación clara entre componentes, estilos y datos de configuración.
+
+## 15. ESTRUCTURA DEL CÓDIGO
+
+Buscá una estructura modular, por ejemplo:
+
+src/
+  app/
+    layout.tsx
+    page.tsx
+    globals.css
+  components/
+    experience/
+      BirthdayExperience.tsx
+      IntroScene.tsx
+      MemoriesScene.tsx
+      CoupleQuizScene.tsx
+      LoveNotesScene.tsx
+      FinalLetterScene.tsx
+    ui/
+      GiftBox.tsx
+      Polaroid.tsx
+      PhotoModal.tsx
+      ProgressIndicator.tsx
+      MusicToggle.tsx
+      Confetti.tsx
+  config/
+    birthday.ts
+  types/
+    birthday.ts
+
+Podés modificar esta estructura si encontrás una alternativa más clara para el proyecto.
+
+La navegación entre escenas debe controlarse desde un estado central y bien tipado.
+
+Evitá componentes gigantes con toda la lógica de la aplicación.
+
+Centralizá el contenido editable. No dupliques las preguntas, textos ni configuraciones.
+
+## 16. RENDIMIENTO Y DESPLIEGUE
+
+La web debe poder desplegarse en Vercel.
+
+Optimizá:
+- Peso de las fotografías.
+- Tamaños de imagen.
+- Cantidad de elementos animados simultáneamente.
+- Dependencias.
+- Renderizado.
+- Carga inicial.
+
+No cargues todas las imágenes en tamaño completo si no es necesario.
+
+Usá dimensiones o relaciones de aspecto para evitar saltos de diseño. Considerá lazy loading para las fotos que no aparecen al inicio.
+
+No agregues un backend, analítica ni servicios externos que no sean necesarios.
+
+La experiencia debe seguir funcionando sin conexión a servicios de terceros, siempre que los archivos de la web ya estén cargados y no se haya elegido un servicio externo de música.
+
+## 17. CRITERIOS DE ACEPTACIÓN
+
+Antes de terminar, comprobá que:
+
+1. La web se inicia correctamente.
+2. La caja de regalo responde a la interacción.
+3. Las cinco escenas se pueden recorrer.
+4. Es posible volver a escenas anteriores cuando corresponda.
+5. El minijuego funciona con todas las preguntas.
+6. Las tarjetas revelan sus mensajes.
+7. El progreso se actualiza correctamente.
+8. La carta muestra los párrafos correctamente.
+9. La sorpresa final se desbloquea.
+10. Las fotografías pueden reemplazarse desde una configuración clara.
+11. La falta de imágenes no rompe la experiencia.
+12. La música, si está configurada, se puede activar y pausar.
+13. No existen errores importantes en consola.
+14. No hay errores de TypeScript ni de compilación.
+15. La web funciona en un viewport móvil y en uno de escritorio.
+16. Las animaciones respetan las preferencias de movimiento reducido.
+17. La experiencia tiene un principio, un desarrollo y un final satisfactorio.
+
+Ejecutá los comandos apropiados para comprobar el proyecto. Corregí los errores reales que encuentres y no afirmes que una verificación pasó si no pudiste ejecutarla.
+
+## 18. FORMA DE TRABAJO
+
+Primero inspeccioná el proyecto y determiná qué está instalado.
+
+Después:
+1. Definí una arquitectura sencilla.
+2. Implementá la experiencia completa.
+3. Construí el diseño visual y las animaciones.
+4. Agregá la configuración centralizada de contenido.
+5. Probá los recorridos principales.
+6. Ejecutá lint, TypeScript y build según los scripts disponibles.
+7. Corregí los problemas encontrados.
+8. Documentá cómo personalizarla y desplegarla.
+
+Tomá decisiones razonables sin detenerte a preguntarme por cada detalle menor.
+
+Si necesitás información personal que no te proporcioné, utilizá placeholders editables y seguí construyendo.
+
+No finalices con una web vacía ni con una pantalla de bienvenida sin las demás escenas.
+
+## 19. RESULTADO ESPERADO
+
+Quiero una experiencia de cumpleaños terminada, visualmente cuidada, tierna y divertida, con fotografías reales de la pareja, pequeños juegos, mensajes personales, transiciones y una sorpresa final.
+
+La prioridad es que funcione bien, que se vea hermosa en el celular y que sea fácil de personalizar antes de compartirla.
+
+Al terminar, explicame brevemente:
+- Qué implementaste.
+- Cómo ejecutar la web.
+- En qué archivo cambio los textos y las preguntas.
+- En qué carpetas agrego las fotos y la música.
+- Cómo personalizo la carta y el regalo final.
+- Cómo la publico en Vercel.
+
+Empezá inspeccionando el proyecto actual y luego implementá la solución completa.
