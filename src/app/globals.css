@@ -25,13 +25,16 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-:focus-visible {
-  outline: 3px solid var(--color-plum);
-  outline-offset: 3px;
-}
+/* En la capa base para que las utilidades (outline-none en los títulos) puedan pisarlo. */
+@layer base {
+  :focus-visible {
+    outline: 3px solid var(--color-plum);
+    outline-offset: 3px;
+  }
 
-.tone-night :focus-visible {
-  outline-color: var(--color-cream);
+  .tone-night :focus-visible {
+    outline-color: var(--color-cream);
+  }
 }
 
 .paper {
