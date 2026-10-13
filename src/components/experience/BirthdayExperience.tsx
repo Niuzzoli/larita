@@ -5,6 +5,7 @@ import { useCallback, useEffect, useReducer, useState } from "react";
 import { ProgressIndicator } from "@/components/ui/ProgressIndicator";
 import { experienceReducer, initialState } from "@/state/experience";
 import { IntroScene } from "./IntroScene";
+import { MemoriesScene } from "./MemoriesScene";
 
 export function BirthdayExperience() {
   const [state, dispatch] = useReducer(experienceReducer, initialState);
@@ -18,6 +19,10 @@ export function BirthdayExperience() {
     setNavigated(true);
     dispatch({ type: "next", from: scene });
   }, [scene]);
+  const back = useCallback(() => {
+    setNavigated(true);
+    dispatch({ type: "back", from: scene });
+  }, [scene]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -27,6 +32,8 @@ export function BirthdayExperience() {
     switch (scene) {
       case "intro":
         return <IntroScene initiallyOpened={state.maxReached !== "intro"} onNext={next} />;
+      case "memories":
+        return <MemoriesScene onNext={next} onBack={back} />;
       default:
         return null;
     }
