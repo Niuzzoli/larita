@@ -13,9 +13,19 @@
   --font-hand: var(--font-caveat);
 }
 
+:root {
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
 html,
 body {
   overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-rose);
+  color: var(--color-plum);
 }
 
 body {
@@ -76,7 +86,184 @@ html.night body {
 }
 
 dialog::backdrop {
-  background: rgba(31, 20, 48, 0.86);
+  background: rgba(31, 20, 48, 0.93);
+}
+
+/* --- Respuesta al toque --- */
+
+.press {
+  transition: scale 140ms var(--ease-out);
+}
+
+.press:active:not(:disabled) {
+  scale: 0.96;
+}
+
+.btn-primary {
+  transition:
+    translate 150ms var(--ease-out),
+    scale 150ms var(--ease-out),
+    box-shadow 150ms var(--ease-out);
+}
+
+.btn-primary:active {
+  translate: 0 3px;
+  scale: 0.98;
+  box-shadow: 0 2px 0 rgba(87, 57, 77, 0.2);
+}
+
+/* La inclinación va en una variable para poder enderezar la foto al pasar el cursor. */
+.polaroid-photo {
+  rotate: var(--tilt, 0deg);
+  transition:
+    rotate 350ms var(--ease-out),
+    translate 350ms var(--ease-out),
+    scale 160ms var(--ease-out),
+    box-shadow 350ms var(--ease-out);
+}
+
+.polaroid-photo:has(> button:active) {
+  scale: 0.98;
+}
+
+.envelope {
+  rotate: var(--tilt, 0deg);
+  transition:
+    rotate 300ms var(--ease-out),
+    translate 300ms var(--ease-out),
+    scale 160ms var(--ease-out);
+}
+
+.envelope[aria-expanded="false"]:active {
+  scale: 0.96;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover:not(:active) {
+    translate: 0 -1px;
+    box-shadow: 0 6px 0 rgba(87, 57, 77, 0.2);
+  }
+
+  .polaroid-photo:has(> button):hover {
+    rotate: calc(var(--tilt, 0deg) * 0.25);
+    translate: 0 -4px;
+    box-shadow:
+      0 1px 2px rgba(87, 57, 77, 0.12),
+      0 24px 34px -14px rgba(87, 57, 77, 0.38);
+  }
+
+  .envelope[aria-expanded="false"]:hover {
+    rotate: calc(var(--tilt, 0deg) * 0.4);
+    translate: 0 -3px;
+  }
+}
+
+/* --- Foto ampliada --- */
+
+.photo-modal,
+.photo-modal::backdrop {
+  transition:
+    opacity 240ms var(--ease-out),
+    scale 240ms var(--ease-out);
+}
+
+@starting-style {
+  .photo-modal[open] {
+    opacity: 0;
+    scale: 0.96;
+  }
+
+  .photo-modal[open]::backdrop {
+    opacity: 0;
+  }
+}
+
+@keyframes photo-swap {
+  from {
+    opacity: 0;
+    scale: 0.985;
+  }
+}
+
+.photo-swap {
+  animation: photo-swap 220ms var(--ease-out);
+}
+
+/* --- Apertura: solo la primera vez que se ve la caja --- */
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    translate: 0 14px;
+  }
+}
+
+.rise-in {
+  animation: rise-in 900ms var(--ease-out) var(--d, 0ms) both;
+}
+
+@keyframes gift-in {
+  from {
+    opacity: 0;
+    translate: 0 22px;
+    scale: 0.92;
+  }
+}
+
+.gift-in {
+  animation: gift-in 1000ms var(--ease-out) 350ms both;
+}
+
+@keyframes draw-line {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+
+.draw-line path {
+  stroke-dasharray: 1;
+  animation: draw-line 900ms var(--ease-in-out) 550ms both;
+}
+
+/* La caja se sacude apenas cada tanto, como si algo adentro quisiera salir. */
+@keyframes gift-nudge {
+  0%,
+  14%,
+  100% {
+    rotate: 0deg;
+  }
+  3% {
+    rotate: -2.5deg;
+  }
+  6% {
+    rotate: 2deg;
+  }
+  9% {
+    rotate: -1.2deg;
+  }
+  12% {
+    rotate: 0.6deg;
+  }
+}
+
+.gift-nudge {
+  transform-origin: 50% 90%;
+  animation: gift-nudge 4.5s ease-in-out 2.4s infinite;
+}
+
+/* --- Confeti: corre en el compositor, sin JavaScript por cuadro --- */
+
+@keyframes confetti-fall {
+  from {
+    transform: translate3d(0, -6vh, 0) rotate(0deg);
+  }
+  to {
+    transform: translate3d(var(--drift), 106vh, 0) rotate(var(--spin));
+  }
+}
+
+.confetti-piece {
+  animation: confetti-fall cubic-bezier(0.3, 0, 0.8, 1) both;
 }
 
 @keyframes twinkle {
@@ -90,8 +277,25 @@ dialog::backdrop {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .twinkle {
+  .twinkle,
+  .rise-in,
+  .gift-in,
+  .gift-nudge,
+  .draw-line path,
+  .photo-swap {
     animation: none;
+  }
+  .confetti-piece {
+    display: none;
+  }
+  .press,
+  .btn-primary,
+  .polaroid-photo,
+  .envelope,
+  .photo-modal {
+    transition-property: opacity, box-shadow;
+    scale: 1 !important;
+    translate: none !important;
   }
   * {
     scroll-behavior: auto !important;

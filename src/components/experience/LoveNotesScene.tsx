@@ -8,6 +8,7 @@ import { Envelope } from "@/components/ui/Envelope";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import { SceneShell } from "@/components/ui/SceneShell";
 import { daysTogether } from "@/lib/daysTogether";
+import { EASE_OUT } from "@/lib/motion";
 
 const ROTATIONS = [-2, 1.5, 2, -1, 1, -2, -1.5, 2];
 const TINTS = ["#F8DCE6", "#C9B8E8", "#EBA8C0", "#FFF5F2"];
@@ -24,6 +25,9 @@ export function LoveNotesScene({ opened, onOpen, onNext, onBack }: LoveNotesScen
   const [now] = useState(() => new Date());
   const remaining = notes.items.filter((note) => !opened.includes(note.id)).length;
   const days = daysTogether(relationshipStart, now);
+  // Si ya estaban todas abiertas al entrar, el cierre aparece sin animarse de nuevo.
+  const [startedDone] = useState(remaining === 0);
+  const justFinished = !startedDone;
 
   return (
     <SceneShell heading={notes.title} onBack={onBack}>
@@ -37,7 +41,13 @@ export function LoveNotesScene({ opened, onOpen, onNext, onBack }: LoveNotesScen
 
       <ul className="cork mt-6 grid grid-cols-2 gap-x-4 gap-y-6 rounded-2xl p-4 sm:grid-cols-4 sm:p-6">
         {notes.items.map((note, i) => (
-          <li key={note.id}>
+          <motion.li
+            key={note.id}
+            // Los sobres se apoyan en el corcho de a uno.
+            initial={{ opacity: 0, y: 18, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.55, ease: EASE_OUT, delay: 0.18 + i * 0.05 }}
+          >
             <Envelope
               title={note.title}
               message={note.message}
@@ -46,15 +56,16 @@ export function LoveNotesScene({ opened, onOpen, onNext, onBack }: LoveNotesScen
               rotate={ROTATIONS[i % ROTATIONS.length]}
               tint={TINTS[i % TINTS.length]}
             />
-          </li>
+          </motion.li>
         ))}
       </ul>
 
       {remaining === 0 && (
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.5 }}
+          // Espera a que termine de salir la última nota.
+          initial={justFinished ? { opacity: 0, y: 20, scale: 0.96 } : false}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.7, ease: EASE_OUT, delay: 0.85 }}
           className="mt-10 flex flex-col items-center gap-6 text-center"
         >
           <div className="polaroid -rotate-1 px-6 py-4">

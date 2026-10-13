@@ -1,9 +1,22 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { ImageOff } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, type CSSProperties } from "react";
+import { EASE_OUT } from "@/lib/motion";
 import type { Photo } from "@/types/birthday";
+
+// La foto "se revela" cuando un ancestro pasa de la variante `hidden` a `shown`.
+// Sin ese ancestro (o si no anima), se ve nítida desde el principio.
+const develop = {
+  hidden: { scale: 1.07 },
+  shown: { scale: 1, transition: { duration: 1.5, ease: EASE_OUT } },
+};
+const veil = {
+  hidden: { opacity: 1 },
+  shown: { opacity: 0, transition: { duration: 1.2, delay: 0.2, ease: "easeOut" as const } },
+};
 
 interface PolaroidProps {
   photo: Photo;
@@ -34,7 +47,7 @@ export function Polaroid({
   if (failed && onMissing === "hide") return null;
 
   return (
-    <figure className="polaroid relative" style={{ rotate: `${rotate}deg` }}>
+    <figure className="polaroid polaroid-photo relative" style={{ "--tilt": `${rotate}deg` } as CSSProperties}>
       {tape && <span className="tape" aria-hidden />}
       <div className="relative overflow-hidden bg-blush" style={{ aspectRatio: `${photo.width} / ${photo.height}` }}>
         {failed ? (
@@ -44,16 +57,26 @@ export function Polaroid({
             <code className="text-xs break-all">{`public${photo.src}`}</code>
           </div>
         ) : (
-          <Image
-            src={photo.src}
-            alt={photo.alt}
-            width={photo.width}
-            height={photo.height}
-            sizes={sizes}
-            loading={eager ? "eager" : "lazy"}
-            onError={() => setFailed(true)}
-            className="h-full w-full object-cover"
-          />
+          <>
+            <motion.div variants={develop} className="h-full w-full">
+              <Image
+                src={photo.src}
+                alt={photo.alt}
+                width={photo.width}
+                height={photo.height}
+                sizes={sizes}
+                loading={eager ? "eager" : "lazy"}
+                onError={() => setFailed(true)}
+                className="h-full w-full object-cover"
+              />
+            </motion.div>
+            <motion.div
+              aria-hidden
+              variants={veil}
+              style={{ opacity: 0 }}
+              className="pointer-events-none absolute inset-0 bg-[#f6e6da]"
+            />
+          </>
         )}
       </div>
       {caption && <figcaption className="px-1 pt-2 text-center font-hand text-xl leading-tight text-plum">{caption}</figcaption>}

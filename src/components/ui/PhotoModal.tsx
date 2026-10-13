@@ -13,7 +13,8 @@ interface PhotoModalProps {
   onClose: () => void;
 }
 
-const roundButton = "inline-flex size-11 items-center justify-center rounded-full bg-cream/15 text-cream";
+const roundButton =
+  "press inline-flex size-11 items-center justify-center rounded-full bg-cream/15 text-cream transition-colors hover:bg-cream/25";
 
 export function PhotoModal({ photos, index, onChange, onClose }: PhotoModalProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -38,7 +39,7 @@ export function PhotoModal({ photos, index, onChange, onClose }: PhotoModalProps
         if (event.key === "ArrowLeft") onChange(wrapIndex(index - 1, photos.length));
       }}
       aria-label={`Foto ${index + 1} de ${photos.length}`}
-      className="tone-night m-auto max-h-dvh w-full max-w-xl bg-transparent p-4 text-cream"
+      className="photo-modal tone-night m-auto max-h-dvh w-full max-w-xl bg-transparent p-4 text-cream"
     >
       <div className="flex justify-end">
         <button type="button" onClick={() => dialogRef.current?.close()} aria-label="Cerrar" className={roundButton}>
@@ -53,7 +54,7 @@ export function PhotoModal({ photos, index, onChange, onClose }: PhotoModalProps
         width={photo.width}
         height={photo.height}
         sizes="(min-width: 640px) 576px, 100vw"
-        className="mx-auto mt-3 h-auto max-h-[calc(100dvh-17rem)] w-auto max-w-full rounded-sm"
+        className="photo-swap mx-auto mt-3 h-auto max-h-[calc(100dvh-17rem)] w-auto max-w-full rounded-sm"
       />
 
       <p className="mt-3 text-center font-hand text-2xl leading-tight">{photo.caption}</p>

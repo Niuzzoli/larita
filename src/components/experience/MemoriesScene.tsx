@@ -7,6 +7,7 @@ import { PhotoModal } from "@/components/ui/PhotoModal";
 import { Polaroid } from "@/components/ui/Polaroid";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import { SceneShell } from "@/components/ui/SceneShell";
+import { EASE_OUT } from "@/lib/motion";
 
 // Inclinación fija por posición: evita diferencias entre renders y da ritmo al álbum.
 const ROTATIONS = [-3, 2, 0, -2, 3, 0, -1, 2, 0];
@@ -51,10 +52,20 @@ export function MemoriesScene({ onNext, onBack }: MemoriesSceneProps) {
             <motion.li
               key={photo.src}
               className={`${landscape ? "w-full" : `w-[80%] ${side}`} ${DESKTOP_CLASS[slots[i]]}`}
-              initial={{ opacity: 0, y: 28 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              // Cada foto llega como si la apoyaran en la página: sube, se endereza y se revela (ver Polaroid).
+              variants={{
+                hidden: { opacity: 0, y: 36, scale: 0.96, rotate: i % 2 === 0 ? -4 : 4 },
+                shown: {
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                  rotate: 0,
+                  transition: { duration: 0.9, ease: EASE_OUT, opacity: { duration: 0.5, ease: "easeOut" } },
+                },
+              }}
+              initial="hidden"
+              whileInView="shown"
               viewport={{ once: true, margin: "0px 0px -12% 0px" }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
             >
               <Polaroid
                 photo={photo}

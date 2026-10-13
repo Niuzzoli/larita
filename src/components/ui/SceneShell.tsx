@@ -30,7 +30,7 @@ export function SceneShell({ heading, eyebrow, tone = "light", headingClassName 
         <button
           type="button"
           onClick={onBack}
-          className="mb-3 inline-flex min-h-11 items-center gap-1 self-start rounded-full pr-3 text-sm underline-offset-4 hover:underline"
+          className="press mb-3 inline-flex min-h-11 items-center gap-1 self-start rounded-full pr-3 text-sm underline-offset-4 hover:underline"
         >
           <ArrowLeft size={16} aria-hidden /> Volver
         </button>

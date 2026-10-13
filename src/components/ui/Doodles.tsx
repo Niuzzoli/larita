@@ -19,7 +19,7 @@ export function DoodleHeart({ className = "" }: { className?: string }) {
 export function DoodleSquiggle({ className = "" }: { className?: string }) {
   return (
     <svg viewBox="0 0 96 24" aria-hidden className={className}>
-      <path d="M4 14c8-12 14 10 22 0s14 10 22 0 14 10 22 0 14 10 22 0" {...stroke} />
+      <path pathLength={1} d="M4 14c8-12 14 10 22 0s14 10 22 0 14 10 22 0 14 10 22 0" {...stroke} />
     </svg>
   );
 }
