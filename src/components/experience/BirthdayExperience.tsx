@@ -2,7 +2,9 @@
 
 import { AnimatePresence, MotionConfig, motion } from "framer-motion";
 import { useCallback, useEffect, useReducer, useState } from "react";
+import { MusicToggle } from "@/components/ui/MusicToggle";
 import { ProgressIndicator } from "@/components/ui/ProgressIndicator";
+import { birthday } from "@/config/birthday";
 import { experienceReducer, initialState } from "@/state/experience";
 import { CoupleQuizScene } from "./CoupleQuizScene";
 import { FinalLetterScene } from "./FinalLetterScene";
@@ -68,7 +70,10 @@ export function BirthdayExperience() {
       <div className={`min-h-dvh transition-colors duration-[2000ms] ${night ? "bg-night" : "paper bg-cream"}`}>
         <header className="pointer-events-none fixed inset-x-0 top-0 z-20 flex items-center justify-between px-5 pt-[calc(1rem+env(safe-area-inset-top))]">
           <ProgressIndicator current={scene} tone={night ? "night" : "light"} />
-          <div className="pointer-events-auto" data-slot="music" />
+          {/* Fuera del AnimatePresence: la música sigue al cambiar de escena. */}
+          <div className="pointer-events-auto">
+            <MusicToggle music={birthday.music} tone={night ? "night" : "light"} />
+          </div>
         </header>
 
         <AnimatePresence mode="wait">
