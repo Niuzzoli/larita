@@ -26,6 +26,14 @@ export function CoupleQuizScene({ answers, onAnswer, onNext, onBack }: CoupleQui
     return firstUnanswered === -1 ? total : firstUnanswered;
   });
 
+  // La tarjeta con la que se entra a la escena no anima su entrada; las siguientes sí.
+  // (AnimatePresence initial={false} apagaría también la animación de la primera reacción.)
+  const [moved, setMoved] = useState(false);
+  const goNext = () => {
+    setMoved(true);
+    setStep(step + 1);
+  };
+
   const question = quiz.questions[step];
   const chosen = question ? answers[question.id] : undefined;
   const reaction = question && chosen !== undefined ? getReaction(question, chosen) : null;
@@ -48,22 +56,22 @@ export function CoupleQuizScene({ answers, onAnswer, onNext, onBack }: CoupleQui
         />
       </div>
 
-      <AnimatePresence mode="wait" initial={false}>
+      <AnimatePresence mode="wait">
         {done ? (
           <motion.div
             key="result"
-            initial={{ opacity: 0, scale: 0.96 }}
+            initial={moved ? { opacity: 0, scale: 0.96 } : false}
             animate={{ opacity: 1, scale: 1 }}
             className="relative mt-10 flex flex-1 flex-col items-center justify-center gap-8 text-center"
           >
-            <Burst />
+            {moved && <Burst />}
             <p className="max-w-md font-serif text-3xl leading-snug text-balance">{quiz.result}</p>
             <PrimaryButton onClick={onNext}>{quiz.continueLabel}</PrimaryButton>
           </motion.div>
         ) : (
           <motion.div
             key={question.id}
-            initial={{ opacity: 0, x: 24 }}
+            initial={moved ? { opacity: 0, x: 24 } : false}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -24 }}
             transition={{ duration: 0.3 }}
@@ -111,7 +119,7 @@ export function CoupleQuizScene({ answers, onAnswer, onNext, onBack }: CoupleQui
                 >
                   <Burst count={6} />
                   <p className="font-hand text-2xl leading-tight">{reaction.text}</p>
-                  <PrimaryButton onClick={() => setStep(step + 1)}>
+                  <PrimaryButton onClick={goNext}>
                     {step + 1 === total ? quiz.resultLabel : quiz.nextLabel}
                     <ArrowRight size={18} aria-hidden />
                   </PrimaryButton>

@@ -37,9 +37,11 @@ export function BirthdayExperience() {
   const revealGift = useCallback(() => dispatch({ type: "revealGift" }), []);
   const restart = useCallback(() => dispatch({ type: "restart" }), []);
 
+  // El fondo de toda la página acompaña a la escena nocturna (barras del navegador y rebote del scroll).
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [scene]);
+    document.documentElement.classList.toggle("night", night);
+    return () => document.documentElement.classList.remove("night");
+  }, [night]);
 
   const renderScene = () => {
     switch (scene) {
@@ -76,7 +78,8 @@ export function BirthdayExperience() {
           </div>
         </header>
 
-        <AnimatePresence mode="wait">
+        {/* Se vuelve arriba cuando la escena anterior ya salió, no antes. */}
+        <AnimatePresence mode="wait" onExitComplete={() => window.scrollTo(0, 0)}>
           <motion.main
             key={scene}
             initial={navigated ? { opacity: 0, y: 18 } : false}

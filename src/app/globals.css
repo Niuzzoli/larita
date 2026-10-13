@@ -23,6 +23,12 @@ body {
   color: var(--color-plum);
   font-family: var(--font-dm-sans), system-ui, sans-serif;
   -webkit-tap-highlight-color: transparent;
+  transition: background-color 2s;
+}
+
+html.night,
+html.night body {
+  background: var(--color-night);
 }
 
 /* En la capa base para que las utilidades (outline-none en los títulos) puedan pisarlo. */
