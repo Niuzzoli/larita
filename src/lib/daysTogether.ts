@@ -15,3 +15,23 @@ export function daysTogether(startIso: string | undefined, now: Date): number | 
   const days = Math.round((today - startDay) / MS_PER_DAY);
   return days < 0 ? null : days;
 }
+
+export interface TimeTogether {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+}
+
+/** Días completos más las horas, minutos y segundos que van del día de hoy. Null en los mismos casos que `daysTogether`. */
+export function timeTogether(startIso: string | undefined, now: Date): TimeTogether | null {
+  const days = daysTogether(startIso, now);
+  if (days === null) return null;
+  const secondsToday = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
+  return {
+    days,
+    hours: Math.floor(secondsToday / 3600),
+    minutes: Math.floor(secondsToday / 60) % 60,
+    seconds: secondsToday % 60,
+  };
+}

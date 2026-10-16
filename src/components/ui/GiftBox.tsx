@@ -3,6 +3,42 @@
 import { motion } from "framer-motion";
 import { EASE_OUT } from "@/lib/motion";
 
+/** Flores que asoman de la caja: cabeza (x, y), tamaño, color de pétalos y del centro. */
+const FLOWERS = [
+  { x: 72, y: 46, r: 20, petal: "#EBA8C0", center: "#F6D58E" },
+  { x: 168, y: 42, r: 20, petal: "#C9B8E8", center: "#F6D58E" },
+  { x: 120, y: 16, r: 24, petal: "#F8DCE6", center: "#E89AB4" },
+  { x: 95, y: 74, r: 16, petal: "#FFFFFF", center: "#F6D58E" },
+  { x: 146, y: 72, r: 16, petal: "#EBA8C0", center: "#FFF5F2" },
+];
+
+/** Flor de cinco pétalos con tallo y una hojita, dibujada desde su cabeza. */
+function Flower({ x, y, r, petal, center }: (typeof FLOWERS)[number]) {
+  return (
+    <g>
+      <path d={`M${x} ${y}Q${(x + 120) / 2} ${y + 50} 120 150`} stroke="#7FA77A" strokeWidth="3.5" fill="none" strokeLinecap="round" />
+      <path
+        d={`M${(x + 120) / 2} ${y + 44}q${x < 120 ? 14 : -14} -4 ${x < 120 ? 20 : -20} -16q${x < 120 ? -14 : 14} 0 ${x < 120 ? -20 : 20} 16Z`}
+        fill="#9CC394"
+      />
+      {[0, 72, 144, 216, 288].map((angle) => (
+        <ellipse
+          key={angle}
+          cx={x}
+          cy={y - r * 0.62}
+          rx={r * 0.48}
+          ry={r * 0.68}
+          fill={petal}
+          stroke="#57394D"
+          strokeOpacity="0.16"
+          transform={`rotate(${angle} ${x} ${y})`}
+        />
+      ))}
+      <circle cx={x} cy={y} r={r * 0.34} fill={center} />
+    </g>
+  );
+}
+
 interface GiftBoxProps {
   opened: boolean;
   onOpen: () => void;
@@ -33,6 +69,9 @@ export function GiftBox({ opened, onOpen, label }: GiftBoxProps) {
             <stop offset="45%" stopColor="#F8DCE6" stopOpacity="0.7" />
             <stop offset="100%" stopColor="#EBA8C0" stopOpacity="0" />
           </radialGradient>
+          <clipPath id="gift-mouth">
+            <rect x="-40" y="-120" width="320" height="234" />
+          </clipPath>
         </defs>
         <ellipse cx="120" cy="246" rx="86" ry="9" fill="#57394D" opacity="0.12" />
 
@@ -63,6 +102,27 @@ export function GiftBox({ opened, onOpen, label }: GiftBoxProps) {
           <rect x="26" y="84" width="188" height="36" rx="8" fill="#F8DCE6" stroke="#57394D" strokeOpacity="0.18" />
           <rect x="104" y="84" width="32" height="36" fill="#C9B8E8" />
         </motion.g>
+
+        {/* Flores: suben desde adentro de la caja y quedan asomando, delante de la tapa.
+            El recorte en la boca de la caja esconde los tallos. */}
+        <g clipPath="url(#gift-mouth)">
+          {FLOWERS.map((flower, i) => (
+            <motion.g
+              key={i}
+              initial={false}
+              animate={opened ? { y: 0, opacity: 1 } : { y: 140, opacity: 0 }}
+              transition={{
+                type: "spring",
+                duration: 0.9,
+                bounce: 0.35,
+                delay: 0.3 + i * 0.09,
+                opacity: { duration: 0.2, delay: 0.3 + i * 0.09 },
+              }}
+            >
+              <Flower {...flower} />
+            </motion.g>
+          ))}
+        </g>
 
         {/* Moño: se suelta y cae */}
         <motion.g

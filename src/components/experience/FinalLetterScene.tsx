@@ -134,7 +134,7 @@ export function FinalLetterScene({
                 whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 viewport={{ once: true, margin: "0px 0px -8% 0px" }}
                 transition={{ duration: 1, ease: EASE_OUT, delay: 0.15 }}
-                className="mt-4 font-serif text-lg leading-relaxed first:mt-0"
+                className="mt-4 font-script text-2xl leading-relaxed first:mt-0 sm:text-[1.65rem]"
               >
                 {paragraph}
               </motion.p>

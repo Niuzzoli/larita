@@ -2,12 +2,12 @@
 
 import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { birthday } from "@/config/birthday";
 import { Envelope } from "@/components/ui/Envelope";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import { SceneShell } from "@/components/ui/SceneShell";
-import { daysTogether } from "@/lib/daysTogether";
+import { timeTogether } from "@/lib/daysTogether";
 import { EASE_OUT } from "@/lib/motion";
 
 const ROTATIONS = [-2, 1.5, 2, -1, 1, -2, -1.5, 2];
@@ -22,9 +22,16 @@ interface LoveNotesSceneProps {
 
 export function LoveNotesScene({ opened, onOpen, onNext, onBack }: LoveNotesSceneProps) {
   const { notes, relationshipStart } = birthday;
-  const [now] = useState(() => new Date());
+  const [now, setNow] = useState(() => new Date());
   const remaining = notes.items.filter((note) => !opened.includes(note.id)).length;
-  const days = daysTogether(relationshipStart, now);
+  const together = timeTogether(relationshipStart, now);
+
+  // El contador corre segundo a segundo solo cuando ya está a la vista.
+  useEffect(() => {
+    if (remaining !== 0) return;
+    const timer = window.setInterval(() => setNow(new Date()), 1000);
+    return () => window.clearInterval(timer);
+  }, [remaining]);
   // Si ya estaban todas abiertas al entrar, el cierre aparece sin animarse de nuevo.
   const [startedDone] = useState(remaining === 0);
   const justFinished = !startedDone;
@@ -69,10 +76,31 @@ export function LoveNotesScene({ opened, onOpen, onNext, onBack }: LoveNotesScen
           className="mt-10 flex flex-col items-center gap-6 text-center"
         >
           <div className="polaroid -rotate-1 px-6 py-4">
-            {days === null ? (
+            {together === null ? (
               <Heart size={28} fill="#EBA8C0" color="#EBA8C0" aria-hidden />
             ) : (
-              <p className="font-hand text-2xl leading-tight">{notes.unlockedText.replace("{days}", String(days))}</p>
+              <>
+                <p className="font-hand text-2xl leading-tight">
+                  {notes.unlockedText.replace("{days}", String(together.days))}
+                </p>
+                <dl className="mt-3 flex items-start justify-center gap-3 sm:gap-4">
+                  {(
+                    [
+                      [together.days, together.days === 1 ? "día" : "días"],
+                      [together.hours, "horas"],
+                      [together.minutes, "min"],
+                      [together.seconds, "seg"],
+                    ] as const
+                  ).map(([value, label], i) => (
+                    <div key={label} className="flex flex-col-reverse items-center">
+                      <dt className="font-sans text-xs tracking-wide text-plum/60 uppercase">{label}</dt>
+                      <dd className="font-serif text-3xl text-rose-deep tabular-nums">
+                        {i === 0 ? value : String(value).padStart(2, "0")}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </>
             )}
           </div>
           <PrimaryButton onClick={onNext}>{notes.continueLabel}</PrimaryButton>

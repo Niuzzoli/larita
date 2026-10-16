@@ -98,7 +98,7 @@ export const birthday: BirthdayConfig = {
     questions: [
       {
         id: "inicio",
-        question: "¿Qué día empezó nuestro pequeño universo?",
+        question: "¿Qué día empezó Larita y Nacho Iuzzo?",
         options: [
           { id: "a", label: "17/10/2023" },
           { id: "b", label: "16/07/2023" },
@@ -106,25 +106,25 @@ export const birthday: BirthdayConfig = {
           { id: "d", label: "07/06/2023" },
         ],
         correctOptionId: "b",
-        correctReaction: "¡Esa! El 16/07/2023, el mejor día del calendario.",
-        missReaction: "Casi, casi. Fue el 16/07/2023, pero te lo perdono porque sos vos.",
+        correctReaction: "Bueno más te vale que la tenes que saber.",
+        missReaction: "Na estas en cualquiera Larita",
       },
       {
         id: "concierto",
-        question: "¿A quién fuimos a ver en ese re concierto?",
+        question: "¿Quien era el otro artista en el concierto de Angela Torres?",
         options: [
-          { id: "a", label: "Emilia" },
-          { id: "b", label: "Tini" },
-          { id: "c", label: "Ángela Torres" },
-          { id: "d", label: "Nicki Nicole" },
+          { id: "a", label: "No te va gustar" },
+          { id: "b", label: "Q Locura" },
+          { id: "c", label: "Luck Ra" },
+          { id: "d", label: "Emilia" },
         ],
         correctOptionId: "c",
-        correctReaction: "¡Obvio! Ángela Torres y la vida rosa.",
-        missReaction: "Mmm, no. Era Ángela Torres, y fue un re concierto.",
+        correctReaction: "Muy bien se re acuerda mi novia",
+        missReaction: "No Larita, era Luck Ra, La rompio toda encima.",
       },
       {
         id: "bandidos",
-        question: "En la foto de los re bandidos, ¿quién es Luigi?",
+        question: "En la foto de bandidos, ¿quién es Luigi?",
         options: [
           { id: "a", label: "Larita" },
           { id: "b", label: "Nacho" },
@@ -132,8 +132,8 @@ export const birthday: BirthdayConfig = {
           { id: "d", label: "Ninguno" },
         ],
         correctOptionId: "a",
-        correctReaction: "¡Sí! Luigi sos vos, la bandida de verde.",
-        missReaction: "No, no: Luigi sos vos. Yo era Mario.",
+        correctReaction: "Wina re bandida de verde Larita.",
+        missReaction: "No gaguita, Luigi sos vos. Yo era Mario.",
       },
       {
         id: "linda",
@@ -141,7 +141,7 @@ export const birthday: BirthdayConfig = {
         options: [
           { id: "a", label: "Larita", reaction: "Correcto. No hay otra respuesta posible." },
           { id: "b", label: "Obvio que Larita", reaction: "Exacto. Obvio." },
-          { id: "c", label: "La novia de Nacho", reaction: "O sea, vos. Correctísimo." },
+          { id: "c", label: "La novia de Nacho Iuzzo", reaction: "O sea, vos. Corta." },
           { id: "d", label: "Todas las anteriores", reaction: "La respuesta más completa. Diez puntos." },
         ],
       },
@@ -149,8 +149,8 @@ export const birthday: BirthdayConfig = {
         id: "amor",
         question: "¿Quién ama más a quién?",
         options: [
-          { id: "a", label: "Yo", reaction: "Bueno, bueno... te la dejo pasar porque es tu cumple." },
-          { id: "b", label: "Vos", reaction: "Gracias por reconocerlo." },
+          { id: "a", label: "Yo", reaction: "Ok... te la dejo pasar porque es tu cumple." },
+          { id: "b", label: "Vos", reaction: "Facto." },
           { id: "c", label: "Empate técnico", reaction: "Empate, pero con revancha." },
           { id: "d", label: "Esto no se discute", reaction: "Tenés razón: se demuestra." },
         ],
@@ -160,7 +160,7 @@ export const birthday: BirthdayConfig = {
 
   notes: {
     title: "Pequeñas cosas que amo de vos",
-    unlockedText: "Llevamos {days} días juntos, y contando.",
+    unlockedText: "Llevamos juntos, y contando...",
     continueLabel: "Una última cosa",
     items: [
       { id: "1", title: "Razón n.º 1", message: "Amo a mi novia porque siempre lo da todo por mejorar" },
@@ -192,7 +192,7 @@ export const birthday: BirthdayConfig = {
     closing: "Feliz cumpleaños, mi amor. ♡",
     giftButton: "¿Abrimos tu último regalito?",
     giftMessage: {
-      text: "Gracias por dejarme acompañarte un cumpleaños más. Te amo infinito.",
+      text: "Un vale por muchos besitos para mi novia, MUAKITO",
       signature: "Nacho",
     },
     restartLabel: "Volver a ver",
